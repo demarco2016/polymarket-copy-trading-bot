@@ -1,0 +1,46 @@
+name: Copy Trading Bot
+
+on:
+  schedule:
+    - cron: '*/30 * * * *'
+  workflow_dispatch:
+
+env:
+  PYTHON_VERSION: '3.11'
+
+jobs:
+  run:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: ${{ env.PYTHON_VERSION }}
+
+      - name: Cache data state
+        uses: actions/cache@v4
+        with:
+          path: data/
+          key: ${{ github.ref_name }}-bot-data
+
+      - name: Install dependencies
+        run: pip install -r requirements.txt
+
+      - name: Run copy-trading cycle
+        run: python main.py --once
+        env:
+          TARGET_WALLETS: ${{ secrets.TARGET_WALLETS }}
+          PRIVATE_KEY: ${{ secrets.PRIVATE_KEY }}
+          CLOB_API_KEY: ${{ secrets.CLOB_API_KEY }}
+          CLOB_API_SECRET: ${{ secrets.CLOB_API_SECRET }}
+          CLOB_API_PASSPHRASE: ${{ secrets.CLOB_API_PASSPHRASE }}
+          FUNDER_ADDRESS: ${{ secrets.FUNDER_ADDRESS }}
+          SIGNATURE_TYPE: ${{ secrets.SIGNATURE_TYPE }}
+          BUILDER_CODE: ${{ secrets.BUILDER_CODE }}
+          POSITION_SIZE_PCT: ${{ secrets.POSITION_SIZE_PCT }}
+          MAX_POSITION_SIZE_USD: ${{ secrets.MAX_POSITION_SIZE_USD }}
+          MAX_DRAWDOWN_PCT: ${{ secrets.MAX_DRAWDOWN_PCT }}
+          MAX_OPEN_POSITIONS: ${{ secrets.MAX_OPEN_POSITIONS }}
+          BLACKLIST_MARKETS: ${{ secrets.BLACKLIST_MARKETS }}
+          POLL_INTERVAL: ${{ secrets.POLL_INTERVAL }}

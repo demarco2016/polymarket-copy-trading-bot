@@ -26,8 +26,20 @@ python main.py
 | MAX_OPEN_POSITIONS | 10 | Max concurrent copied positions |
 | POLL_INTERVAL | 60 | Seconds between wallet checks |
 
-## Deploy
-For 24/7 operation, deploy to a $5/month VPS:
+## GitHub Actions (Free)
+
+Runs every 30 minutes on GitHub's free tier (2000 min/month).
+
+1. Go to repo **Settings → Secrets and variables → Actions**
+2. Add these secrets:
+   - `TARGET_WALLETS` — comma-separated wallet addresses
+   - `PRIVATE_KEY` — your Ethereum private key
+   - `CLOB_API_KEY`, `CLOB_API_SECRET`, `CLOB_API_PASSPHRASE` — from first local run
+3. Enable **Actions** in the repo
+
+## VPS Deploy ($5/month)
+
+For 24/7 real-time operation:
 ```bash
 git clone https://github.com/demarco2016/polymarket-copy-trading-bot.git
 cd polymarket-copy-trading-bot

@@ -134,4 +134,9 @@ def cycle():
             log_exit(pos.get("order_id", ""), pos.get("price", 0.5), 0)
 
 if __name__ == "__main__":
-    main_loop()
+    import sys
+    if "--once" in sys.argv:
+        print("Mode: single cycle")
+        cycle()
+    else:
+        main_loop()
