@@ -2,7 +2,7 @@ name: Copy Trading Bot
 
 on:
   schedule:
-    - cron: '*/30 * * * *'
+    - cron: '*/30 14-23 * * *'
   workflow_dispatch:
 
 env:
