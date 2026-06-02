@@ -24,8 +24,9 @@ CLOB_API_PASSPHRASE = os.getenv("CLOB_API_PASSPHRASE")
 FUNDER_ADDRESS = os.getenv("FUNDER_ADDRESS")
 SIGNATURE_TYPE = _env_int("SIGNATURE_TYPE", 0)
 BUILDER_CODE = os.getenv("BUILDER_CODE")
+USE_TESTNET = os.getenv("USE_TESTNET", "").lower() in ("1", "true", "yes")
 CLOB_HOST = "https://clob.polymarket.com"
-CHAIN_ID = 137
+CHAIN_ID = 80002 if USE_TESTNET else 137
 
 # Position sizing
 POSITION_SIZE_PCT = _env_float("POSITION_SIZE_PCT", 2.0)

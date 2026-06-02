@@ -47,8 +47,11 @@ def main_loop():
 
 def cycle():
     bankroll = get_bankroll()
-    if not bankroll:
-        print("[WARN] Could not fetch bankroll. Skipping cycle.")
+    if bankroll is None:
+        print("[WARN] Could not connect to Polymarket. Check PRIVATE_KEY.")
+        return
+    if bankroll < 1:
+        print(f"[WARN] Wallet balance: ${bankroll:.2f}. Fund with pUSD to trade.")
         return
 
     if not risk.check_drawdown(bankroll):

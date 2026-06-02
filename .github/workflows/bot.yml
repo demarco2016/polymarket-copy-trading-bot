@@ -44,3 +44,4 @@ jobs:
           MAX_OPEN_POSITIONS: ${{ secrets.MAX_OPEN_POSITIONS }}
           BLACKLIST_MARKETS: ${{ secrets.BLACKLIST_MARKETS }}
           POLL_INTERVAL: ${{ secrets.POLL_INTERVAL }}
+          USE_TESTNET: ${{ secrets.USE_TESTNET }}

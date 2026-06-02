@@ -15,6 +15,9 @@ def get_client():
     global _client
     if _client is not None:
         return _client
+    if not PRIVATE_KEY:
+        print("[Polymarket] PRIVATE_KEY not set. Skipping.")
+        return None
     kwargs = dict(
         host=CLOB_HOST,
         chain_id=CHAIN_ID,
@@ -71,6 +74,8 @@ def get_market_info(condition_id):
 
 def place_order(token_id, side, price, size):
     client = get_client()
+    if not client:
+        return None
     order = OrderArgs(
         token_id=token_id,
         price=price,
@@ -91,6 +96,8 @@ def place_order(token_id, side, price, size):
 
 def cancel_order(order_id):
     client = get_client()
+    if not client:
+        return False
     try:
         client.cancel_order(order_id)
         return True
@@ -101,6 +108,8 @@ def cancel_order(order_id):
 
 def get_open_orders():
     client = get_client()
+    if not client:
+        return []
     try:
         return client.get_open_orders()
     except Exception as e:
@@ -110,6 +119,9 @@ def get_open_orders():
 
 def get_balance():
     client = get_client()
+    if not client:
+        print("[CLOB] Cannot check balance: not connected.")
+        return None
     try:
         return client.get_balance_allowance()
     except Exception as e:
